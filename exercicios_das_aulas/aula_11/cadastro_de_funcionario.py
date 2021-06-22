@@ -1,20 +1,24 @@
 # Crie um programa que leia nome, ano de nascimento e carteira de trabalho e cadastre-os (com idade) em um dicionário. Se por acaso a CTPS for diferente de 0, o dicionário receberá também o ano de contratação e o salário. Calcule e acrescente , além da idade , com quantos anos a pessoa vai se aposentar. Considere que o trabalhador deve contribuir por 35 anos para se aposentar.
 
 #Cadastro de Funcionários alpha por João Rodrigues
-#Vamos limpar as coisas por aqui?
+#Importando biblioteca OS para limpar a tela
 import os
-#Limpando a tela do Interpretador no Windows
-clear = lambda: os.system('cls')
-clear()
-#Limpando a tela do Interpretador no Linux
-clear = lambda: os.system('clear')
-clear()
+import sys
+if sys.platform.startswith('win32') or sys.platform.startswith('cigwin'):
+    #Limpando a tela do Interpretador no Windows
+    clear = lambda: os.system('cls')
+    clear()
+else:
+    #Limpando a tela do Interpretador no Linux
+    clear = lambda: os.system('clear')
+    clear()
 #Okay, agora podemos continuar :)
 #Vamos tornar nosso código atemporal pegando a data do sistema
 import datetime
 now = datetime.datetime.now()
 ano_atual = now.year
 #Agora a gente informa ao usuário qual foi o ano que o sistema informou
+
 print(f'''
 Iniciando Programa de Cadastro de Funcionários.
 
