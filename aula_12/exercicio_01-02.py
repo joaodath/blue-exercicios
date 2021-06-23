@@ -4,6 +4,7 @@
 # {1: 1, 4: 16, 5: 25, 6: 36, 7: 49, 9: 81}
 # Exercício Treino 02 - Crie um dicionário em que suas chaves correspondem a números 
 # inteiros entre [1, 10] e cada valor associado é o número ao quadrado.
+#refazer dicionário com zip do dict
 #Importando biblioteca OS e SYS para limpar a tela
 import os
 import sys
@@ -78,4 +79,3 @@ while quer_continuar == True:
         Programa encerrado!
         Estes foram os valores salvos no dicionário:
         {dicio_do_exercicio}''')
-

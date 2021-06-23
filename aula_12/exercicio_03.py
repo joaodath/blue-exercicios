@@ -61,7 +61,7 @@ e a média final (do ano).
 
 ''')
 quer_continuar = True
-dicio_final = dict() #Aqui é para tentar um dicionário aninhado e/ou pandas na versão beta
+# dicio_final = dict() #Aqui é para tentar um dicionário aninhado e/ou pandas na versão beta
 lista_de_alunos = list() #Recebe os dados temporários para criar uma lista de dicionários
 #Bloco que recebe os dados dos alunos
 while quer_continuar == True:
