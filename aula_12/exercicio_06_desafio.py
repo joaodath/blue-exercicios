@@ -138,34 +138,6 @@ while quer_continuar == True:
     else:
         quer_continuar = False #Se o usuário não quiser inserir mais dados, a variável de controle muda para False
         print()
-#Bloco verificando se o usuário quer imprimir os dados informados na tela
-visualizar_dados = str(input('''
-Você quer ver os dados salvos?
-Digite "Sim" para continuar ou digite qualquer tecla para sair. ''')).strip().upper()
-if visualizar_dados[0] == 'S':
-    visualizar_dados_total = int(input('''
-    Deseja visualizar os dados de todos de uma vez ou apenas de um aluno específico?
-    Digite 1 para Ver Todos Os Alunos
-    Digite 2 para Ver Um Aluno Específico
-    Informe uma opção:  '''))
-    if visualizar_dados_total == 1:
-        valida_opcao = False
-        #Falta colocar comandos aqui dentro
-    elif visualizar_dados_total == 2:
-        valida_opcao = False
-        #Falta colocar comandos aqui dentro
-    else:
-        valida_opcao = True
-        while valida_opcao == True:
-            visualizar_dados_total = int(input('''
-                Deseja visualizar os dados de todos de uma vez ou apenas de um aluno específico?
-                Digite 1 para Ver Todos Os Alunos
-                Digite 2 para Ver Um Aluno Específico
-                Informe uma opção:  '''))
-            if visualizar_dados_total == 1 or visualizar_dados_total == 2:
-                valida_opcao = False
-            else:
-                valida_opcao = True
 #Criando listas com os dados dos alunos para passar para Pandas
 for index, v in enumerate(lista_de_alunos):
     lista_nome_alunos.append(lista_de_alunos[index].get('nome').copy())
@@ -183,14 +155,132 @@ for index, v in enumerate(lista_de_alunos):
     lista_media_tri3.append(lista_de_alunos[index].get('mediatri3').copy())
     lista_media_final.append(lista_de_alunos[index].get('media_final').copy())
     lista_situacao.append(lista_de_alunos[index].get('situacao').copy())
-
-
+#Criando dicionário para usar com o pandas
+dicionario_alunos_completo = {
+    'nome' : lista_nome_alunos,
+    'nota_av1_tri1' : lista_nota_av1_tri1,
+    'nota_av2_tri1' : lista_nota_av2_tri1,
+    'nota_av3_tri1' : lista_nota_av3_tri1,
+    'nota_av1_tri1' : lista_nota_av1_tri1,
+    'nota_av2_tri2' : lista_nota_av2_tri2,
+    'nota_av3_tri3' : lista_nota_av3_tri3,
+    'media_tri1' : lista_media_tri1,
+    'media_tri2' : lista_media_tri2,
+    'media_tri3' : lista_media_tri3,
+    'media_final' : lista_media_tri1,
+    'situacao' : lista_situacao,
+}
+#Criando Dataframe com os dicionários
+dataframe_completo = pd.DataFrame(dicionario_alunos_completo, columns = [dicionario_alunos_completo])
+# # import pandas library
+# import pandas as pd
+  
+# # dictionary with list object in values
+# details = {
+#     'Name' : ['Ankit', 'Aishwarya', 'Shaurya', 'Shivangi'],
+#     'Age' : [23, 21, 22, 21],
+#     'University' : ['BHU', 'JNU', 'DU', 'BHU'],
+# }
+  
+# # creating a Dataframe object with skipping 
+# # one column i.e skipping age column.
+# df = pd.DataFrame(details, columns = ['Name', 'University'])
+  
+# df
 
     # for index, a in enumerate(lista_de_alunos): #Loop na lista composta imprimindo todos os itens, linha por linha
     #     print(f'{index}: {a}')
     #     print()
     # print()
     # print('Programa encerrado!') #Depois de imprimir, o programa é encerrado
+#Bloco verificando se o usuário quer imprimir os dados informados na tela
+visualizar_dados = str(input('''
+Você quer ver os dados salvos?
+Digite "Sim" para continuar ou digite qualquer tecla para sair. ''')).strip().upper()
+if visualizar_dados[0] == 'S':
+    visualizar_dados_total = int(input('''
+    Deseja visualizar os dados de todos de uma vez ou apenas de um aluno específico?
+    Digite 1 para Ver Todos Os Alunos
+    Digite 2 para Ver Um Aluno Específico
+    Informe uma opção:  '''))
+    if visualizar_dados_total == 1:
+        valida_opcao = False
+        print()
+        print(dataframe_completo)
+        print()
+    elif visualizar_dados_total == 2:
+        valida_opcao = False
+        dataframe_nome_alunos = pd.DataFrame(dicionario_alunos_completo, columns = ['nome'])
+        print('''
+        Abaixo está a lista de alunos. 
+        Informe abaixo o número do aluno que deseja acessar o boletim.''')
+        print()
+        print(dataframe_nome_alunos)
+        qual_aluno = int(input('Informe o número do aluno: '))
+        #Listas para montar o dataframe em pandas
+        lista_nome_alunos_ind = list()
+        lista_nota_av1_tri1_ind = list()
+        lista_nota_av2_tri1_ind = list()
+        lista_nota_av3_tri1_ind = list()
+        lista_nota_av1_tri2_ind = list()
+        lista_nota_av2_tri2_ind = list()
+        lista_nota_av3_tri2_ind = list()
+        lista_nota_av1_tri3_ind = list()
+        lista_nota_av2_tri3_ind = list()
+        lista_nota_av3_tri3_ind = list()
+        lista_media_tri1_ind = list()
+        lista_media_tri2_ind = list()
+        lista_media_tri3_ind = list()
+        lista_media_final_ind = list()
+        lista_situacao_ind = list()
+        #Criando listas com os dados dos alunos para passar para Pandas
+        lista_nome_alunos_ind.append(lista_de_alunos[qual_aluno].get('nome').copy())
+        lista_nota_av1_tri1_ind.append(lista_de_alunos[qual_aluno].get('nota_av1_tri1').copy())
+        lista_nota_av2_tri1_ind.append(lista_de_alunos[qual_aluno].get('nota_av2_tri1').copy())
+        lista_nota_av3_tri1_ind.append(lista_de_alunos[qual_aluno].get('nota_av3_tri1').copy())
+        lista_nota_av1_tri2_ind.append(lista_de_alunos[qual_aluno].get('nota_av1_tri2').copy())
+        lista_nota_av2_tri2_ind.append(lista_de_alunos[qual_aluno].get('nota_av2_tri2').copy())
+        lista_nota_av3_tri2_ind.append(lista_de_alunos[qual_aluno].get('nota_av3_tri2').copy())
+        lista_nota_av1_tri3_ind.append(lista_de_alunos[qual_aluno].get('nota_av1_tri3').copy())
+        lista_nota_av2_tri3_ind.append(lista_de_alunos[qual_aluno].get('nota_av2_tri3').copy())
+        lista_nota_av3_tri3_ind.append(lista_de_alunos[qual_aluno].get('nota_av3_tri3').copy())
+        lista_media_tri1_ind.append(lista_de_alunos[qual_aluno].get('mediatri1').copy())
+        lista_media_tri2_ind.append(lista_de_alunos[qual_aluno].get('mediatri2').copy())
+        lista_media_tri3_ind.append(lista_de_alunos[qual_aluno].get('mediatri3').copy())
+        lista_media_final_ind.append(lista_de_alunos[qual_aluno].get('media_final').copy())
+        lista_situacao_ind.append(lista_de_alunos[qual_aluno].get('situacao').copy())
+        #Criando dicionário para usar com o pandas
+        dicionario_alunos_completo_ind = {
+            'nome' : lista_nome_alunos,
+            'nota_av1_tri1' : lista_nota_av1_tri1,
+            'nota_av2_tri1' : lista_nota_av2_tri1,
+            'nota_av3_tri1' : lista_nota_av3_tri1,
+            'nota_av1_tri1' : lista_nota_av1_tri1,
+            'nota_av2_tri2' : lista_nota_av2_tri2,
+            'nota_av3_tri3' : lista_nota_av3_tri3,
+            'media_tri1' : lista_media_tri1,
+            'media_tri2' : lista_media_tri2,
+            'media_tri3' : lista_media_tri3,
+            'media_final' : lista_media_tri1,
+            'situacao' : lista_situacao,
+        }
+        #Criando Dataframe com os dicionários
+        dataframe_completo_ind = pd.DataFrame(dicionario_alunos_completo_ind, columns = [dicionario_alunos_completo_ind])
+        print()
+        print(dataframe_completo_ind)
+        #Falta colocar comandos aqui dentro
+    else:
+        valida_opcao = True
+        while valida_opcao == True:
+            visualizar_dados_total = int(input('''
+                Deseja visualizar os dados de todos de uma vez ou apenas de um aluno específico?
+                Digite 1 para Ver Todos Os Alunos
+                Digite 2 para Ver Um Aluno Específico
+                Informe uma opção:  '''))
+            if visualizar_dados_total == 1 or visualizar_dados_total == 2:
+                valida_opcao = False
+            else:
+                valida_opcao = True
 else:
     print('Programa encerrado!') #O programa é encerrado por não ter mais códigos
 #Fim do Programa
