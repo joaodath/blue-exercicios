@@ -45,7 +45,7 @@ def mes_escrito(value): #DD/MM/AAAA
     ano = value[6:10]
     ano_valida = int(ano)
     mes={"01":"janeiro" ,"02":"fevereiro", "03":"março","04":"abril","05":"maio","06":"junho",
-"07":"julho","08":"agosto", "09":"setembro", "10":"outubro", "11":"novembro", "12":"dezembro"}
+"07":"julho","08":"agosto", "09":"setembro", "10":"outubro", "11":"novembro", "1n2":"dezembro"}
     if mes[mes_chave] == 'fevereiro' and dia_chave <= 29 and ano_valida // 4 == 0:
         return f'{dia} de {mes[mes_chave]} de {ano}'
     elif mes[mes_chave] != 'fevereiro' and dia_chave <= 31:

@@ -18,5 +18,5 @@ while quer_continuar_1 == True:
     #Bloco para Fazer a Escolha do Computador
     for i in range(4):
         for c in range(rodadas):
-            roll_the_dice = randint(1,7)
+            roll_the_dice = randint(1,6)
 
