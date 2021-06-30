@@ -25,7 +25,9 @@ class Pessoa:
         Peso: {self.pesoPessoa}'''
 
 #Programa Principal
-pessoa1 = Pessoa(str(input('Informe o nome da pessoa 1: ').strip().capitalize()), int(input('Informe a idade da pessoa 1: ')), float(input('Informe o peso da pessoa 1: ')))
+pessoa1 = Pessoa(str(input('Informe o nome da pessoa 1: ').strip().capitalize()), 
+            int(input('Informe a idade da pessoa 1: ')), 
+            float(input('Informe o peso da pessoa 1: ')))
 print(pessoa1.mostrarDados())
 pessoa1.comer(10)
 print(pessoa1.mostrarDados())
