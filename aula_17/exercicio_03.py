@@ -43,7 +43,7 @@ class Person:
 
 #Main Program
 print('''
-Hello! Let's play \'Mess Someone\'s Life!
+Hello! Let's play Mess Someone\'s Life!
 For this game, you must select one of the options.
 Now, enough of this. Let's play!''')
 sleep(1)
@@ -51,15 +51,20 @@ play_game = play_another_game = True #Control variables for while loops ahead
 #Here is the actual game. The first while loop controls how much peoples'lives the player will Mess
 while play_another_game == True:
     play_game = True #Sets the control variable for the while loop of the menu to true because if someone stops the while loop ahead in the code setting this to False, the outer while loop will set it to true again and the program will not break
+    print()
     name = str(input('What is the person name? ').strip().capitalize())
+    print()
     age = int(input(f'What is the age of {name}? '))
+    print()
     weight = float(input(f'What is the weight of {name}? '))
+    print()
     height = float(input(f'What is the height of {name} in centimeters (cm)? Example: 175.5cm '))
     person1 = Person(name, age, weight, height)
     print()
     #Now that we know the person details, we print the menu for the game
     while play_game == True:
         print(f'''
+            Messing with {name} - Dashboard
             ----------------------------------------
             Okay, these are your options for {name}:
             [1] Gain Weight
@@ -120,19 +125,23 @@ while play_another_game == True:
             play_game_ask = str(input(f'''
                                 Ops, wrong option. Try again.
                                 Wanna keep playing? Y/N ''').strip().upper())
+            print()
         if play_game_ask.startswith('Y'):
             play_game = True
         else:
             play_game = False
     #Asks the player if they wanna Mess the somebody else's life if not, it ends the game
+    print()
     play_another_game_ask = str(input('Wanna Mess somebody else\'s life? Y/N ').strip().upper())
     #the while loop below runs until the player informs the correct option
     while play_another_game_ask.startswith('Y') != True and play_another_game_ask.startswith('N') != True:
             play_another_game_ask = str(input(f'''
                                 Ops, wrong option. Try again.
                                 Wanna keep playing? Y/N ''').strip().upper())
+            print()
     if play_another_game_ask.startswith('Y'):
         play_another_game = True
     else:
         play_another_game = False
+print()
 print('End of game. Come back soon!')
