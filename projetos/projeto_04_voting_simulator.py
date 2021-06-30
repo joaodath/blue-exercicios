@@ -32,6 +32,9 @@ year_now = now.year
 candidates = {  'candidate1': list(),
                 'candidate2': list(),
                 'candidate3': list(),
+                'candidate1_name': 'Candidate 1',
+                'candidate2_name': 'Candidate 2',
+                'candidate3_name': 'Candidate 3',
                 'null': list(),
                 'blank': list()
             }
@@ -68,27 +71,27 @@ def votacao(auth, vote):
             candidates['null'].append(1)
             return 'NO CANDIDATES FOR THIS NUMBER. YOUR VOTE IS NOW NULLED.'
     elif auth.strip().upper() == 'NEGADO':
-        return 'YOU CANNOT VOTE'
+        return 'YOU CANNOT VOTE. YOU\'RE TOO YOUNG!'
     elif auth.strip().upper() == 'SHOW' and vote == 0 or '0':
         total_votes = sum(candidates['candidate1']) + sum(candidates['candidate2']) + sum(candidates['candidate3'])
         non_valid_votes = sum(candidates['null']) + sum(candidates['blank'])
         if sum(candidates['candidate1'])/total_votes > sum(candidates['candidate2'])/total_votes and sum(candidates['candidate1'])/total_votes > sum(candidates['candidate3'])/total_votes:
-            elected = 'Candidate 1'
+            elected = candidates['candidate1_name']
             elected_votes = sum(candidates['candidate1'])
         elif sum(candidates['candidate2'])/total_votes > sum(candidates['candidate1'])/total_votes and sum(candidates['candidate2'])/total_votes > sum(candidates['candidate3'])/total_votes:
-            elected = 'Candidate 2'
+            elected = candidates['candidate2_name']
             elected_votes = sum(candidates['candidate2'])
         elif sum(candidates['candidate3'])/total_votes > sum(candidates['candidate1'])/total_votes and sum(candidates['candidate3'])/total_votes > sum(candidates['candidate2'])/total_votes:
-            elected = 'Candidate 3'
+            elected = candidates['candidate3_name']
             elected_votes = sum(candidates['candidate3'])
         return f'''
                 ---------------------------------------------------------------
                 Scoreboard for {year_now} election.
                 ---------------------------------------------------------------
 
-                Candidate 1: {sum(candidates['candidate1'])}
-                Candidate 2: {sum(candidates['candidate2'])}
-                Candidate 3: {sum(candidates['candidate3'])}
+                {candidates['candidate1_name']}: {sum(candidates['candidate1'])}
+                {candidates['candidate2_name']}: {sum(candidates['candidate2'])}
+                {candidates['candidate3_name']}: {sum(candidates['candidate3'])}
                 Nulled Votes: {sum(candidates['null'])}
                 Blank Votes: {sum(candidates['blank'])}
                 Total Valid Votes: {total_votes}
@@ -101,17 +104,68 @@ def votacao(auth, vote):
                 '''
     else:
         return None
+
+
+#Main Program
+#Attention: Since we're simulating an election software, I've created a second dimension for this exercise: once started, the software will first look for the officer password. In this case, I've set the password as 'blue'. =D
 #Cleaning the screen
 import os
 os.system('cls' if os.name == 'nt' else 'clear')
 from time import sleep
-
+print('''
+Hello, Officer! Welcome to the Voting System!
+Waiting for iniatilization. ''')
+password = str(input('Please, inform your password: ').strip().lower())
+while password != 'blue':
+    password = str(input('Please, inform your password: ').strip().lower())
+if password == 'blue':
+    print(f'''
+        Welcome, officer!
+        The candidates available are:
+        --------------------------------
+        [1] {candidates['candidate1_name']}
+        [2] {candidates['candidate2_name']}
+        [3] {candidates['candidate3_name']}
+        ''')
+    change = str(input('Do you wanna change their names? Y/N ').strip().upper())
+    while change[0] not in ['Y', 'N']:
+        change = str(input('I\'m sorry! I didn\'t get that. Do you wanna change their names? Y/N ').strip().upper())
+    if change.startswith('Y'):
+        candidates['candidate1_name'] = str(input('Inform the name for Candidate 1: ').strip().capitalize())
+        candidates['candidate2_name'] = str(input('Inform the name for Candidate 2: ').strip().capitalize())
+        candidates['candidate3_name'] = str(input('Inform the name for Candidate 3: ').strip().capitalize())
+    else:
+        pass
+    print('Okay. The system is ready!')
+    sleep(1)
+    print('Rebooting in 3...')
+    sleep(1)
+    os.system('cls' if os.name == 'nt' else 'clear')
+    print('Rebooting in 2...')
+    sleep(1)
+    os.system('cls' if os.name == 'nt' else 'clear')
+    print('Rebooting in 1...')
+    sleep(1)
+    os.system('cls' if os.name == 'nt' else 'clear')
+    print('Rebooting...')
+    os.system('cls' if os.name == 'nt' else 'clear')
 keep_voting = True
 while keep_voting == True:
-    year_of_birth = int(input('Please, inform your year of birth: '))
+    os.system('cls' if os.name == 'nt' else 'clear')
+    print(f'''
+        Hello! Welcome to the Voting System!
+        The candidates available are:
+        -----------------------
+        [1] {candidates['candidate1_name']}
+        [2] {candidates['candidate2_name']}
+        [3] {candidates['candidate3_name']}
+        [4] Null Vote
+        [5] Blank Vote
+        ''')
+    year_of_birth = int(input('In order to vote, please, inform your year of birth: '))
     authorization = autoriza_voto(year_of_birth)
     print()
-    vote_number = int(input('Please, inform the number of your candidate: '))
+    vote_number = int(input('Now, inform the number of your candidate: '))
     vote_process = votacao(authorization, vote_number)
     print()
     print(vote_process)
@@ -119,8 +173,15 @@ while keep_voting == True:
     while keep_voting_ask[0] not in ['Y', 'N']:
         keep_voting_ask = str(input('Close voting? Y/N ').strip().upper())
     if keep_voting_ask.startswith('Y'):
-        keep_voting = False
+        password = str(input('Please, inform your officer\'s password: ').strip().lower())
+        if password == 'blue':
+            keep_voting = False
+        else:
+            print('Password Incorrect.')
+            sleep(3)
+            keep_voting_ask = True
     else:
+        sleep(3)
         keep_voting = True
 print()
 print('Closing voting.')
@@ -128,5 +189,6 @@ sleep(1)
 print()
 print('Calculating data.')
 sleep(1)
+os.system('cls' if os.name == 'nt' else 'clear')
 print()
 print(votacao('SHOW', 0))
