@@ -4,11 +4,13 @@
 # Por padrão, a cada ano que a pessoa envelhece, sendo a idade dela
 # menor que 21 anos, ela deve crescer 0,5 cm
 from time import sleep
+#Cleaning the screen
+import os
+os.system('cls' if os.name == 'nt' else 'clear')
 #Importing datetime to check the actual year
 import datetime
 now = datetime.datetime.now()
 year_now = now.year
-print(year_now)
 #Defining classes
 class Person:
     def __init__(self, name, age, weight, height):
