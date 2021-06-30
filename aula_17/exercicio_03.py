@@ -43,12 +43,12 @@ class Person:
 
 #Main Program
 print('''
-Hello! Let's play \'Fuck Someone\'s Life!
+Hello! Let's play \'Mess Someone\'s Life!
 For this game, you must select one of the options.
 Now, enough of this. Let's play!''')
 sleep(1)
 play_game = play_another_game = True #Control variables for while loops ahead
-#Here is the actual game. The first while loop controls how much peoples'lives the player will fuck
+#Here is the actual game. The first while loop controls how much peoples'lives the player will Mess
 while play_another_game == True:
     play_game = True #Sets the control variable for the while loop of the menu to true because if someone stops the while loop ahead in the code setting this to False, the outer while loop will set it to true again and the program will not break
     name = str(input('What is the person name? ').strip().capitalize())
@@ -112,7 +112,7 @@ while play_another_game == True:
         sleep(2)
         print('''
         Okay, just foolin\' around with ya.''')
-        #Asks the player if they still wanna fuck the same person's life
+        #Asks the player if they still wanna Mess the same person's life
         play_game_ask = str(input(f'''
         Wanna keep playing? Y/N ''').strip().upper())
         #the while loop below runs until the player informs the correct option
@@ -124,8 +124,8 @@ while play_another_game == True:
             play_game = True
         else:
             play_game = False
-    #Asks the player if they wanna fuck the somebody else's life if not, it ends the game
-    play_another_game_ask = str(input('Wanna fuck somebody else\'s life? Y/N ').strip().upper())
+    #Asks the player if they wanna Mess the somebody else's life if not, it ends the game
+    play_another_game_ask = str(input('Wanna Mess somebody else\'s life? Y/N ').strip().upper())
     #the while loop below runs until the player informs the correct option
     while play_another_game_ask.startswith('Y') != True and play_another_game_ask.startswith('N') != True:
             play_another_game_ask = str(input(f'''
