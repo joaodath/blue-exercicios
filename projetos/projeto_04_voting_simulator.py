@@ -28,6 +28,7 @@
 import datetime
 now = datetime.datetime.now()
 year_now = now.year
+elected = ''
 #Declaring dictionary needed INSIDE the functions
 candidates = {  'candidate1': list(),
                 'candidate2': list(),
