@@ -56,6 +56,6 @@ else:
     sleep(1)
     print('It seems like you don\'t know how to play games.')
 print('End of game. You\'re free to go.')
-    
-    
+
+#alteração de exemplo
 
