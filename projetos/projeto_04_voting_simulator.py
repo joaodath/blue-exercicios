@@ -28,7 +28,7 @@
 import datetime
 now = datetime.datetime.now()
 year_now = now.year
-elected = ''
+
 #Declaring dictionary needed INSIDE the functions
 candidates = {  'candidate1': list(),
                 'candidate2': list(),
@@ -39,6 +39,7 @@ candidates = {  'candidate1': list(),
                 'null': list(),
                 'blank': list()
             }
+
 #Defining Functions
 def autoriza_voto(born_year):
     if born_year < year_now:
@@ -51,6 +52,7 @@ def autoriza_voto(born_year):
             return 'NEGADO'
     elif born_year >= year_now:
         return None
+
 def votacao(auth, vote):
     if auth.strip().upper() == 'OBRIGATÓRIO' or auth.strip().upper() == 'OPCIONAL':
         if vote == 1 or vote == '1':
@@ -73,39 +75,71 @@ def votacao(auth, vote):
             return 'NO CANDIDATES FOR THIS NUMBER. YOUR VOTE IS NOW NULLED.'
     elif auth.strip().upper() == 'NEGADO':
         return 'YOU CANNOT VOTE. YOU\'RE TOO YOUNG!'
+        
     elif auth.strip().upper() == 'SHOW' and vote == 0 or '0':
-        total_votes = sum(candidates['candidate1']) + sum(candidates['candidate2']) + sum(candidates['candidate3'])
+        total_valid_votes = sum(candidates['candidate1']) + sum(candidates['candidate2']) + sum(candidates['candidate3'])
         non_valid_votes = sum(candidates['null']) + sum(candidates['blank'])
-        if sum(candidates['candidate1'])/total_votes > sum(candidates['candidate2'])/total_votes and sum(candidates['candidate1'])/total_votes > sum(candidates['candidate3'])/total_votes:
+
+        if sum(candidates['candidate1']) > sum(candidates['candidate2']) and sum(candidates['candidate1']) > sum(candidates['candidate3']):
             elected = candidates['candidate1_name']
             elected_votes = sum(candidates['candidate1'])
-        elif sum(candidates['candidate2'])/total_votes > sum(candidates['candidate1'])/total_votes and sum(candidates['candidate2'])/total_votes > sum(candidates['candidate3'])/total_votes:
+            return scoreboard(total_valid_votes, non_valid_votes, elected, elected_votes)
+        
+        elif sum(candidates['candidate2']) > sum(candidates['candidate1']) and sum(candidates['candidate2']) > sum(candidates['candidate3']):
             elected = candidates['candidate2_name']
             elected_votes = sum(candidates['candidate2'])
-        elif sum(candidates['candidate3'])/total_votes > sum(candidates['candidate1'])/total_votes and sum(candidates['candidate3'])/total_votes > sum(candidates['candidate2'])/total_votes:
+            return scoreboard(total_valid_votes, non_valid_votes, elected, elected_votes)
+        
+        elif sum(candidates['candidate3']) > sum(candidates['candidate1']) and sum(candidates['candidate3']) > sum(candidates['candidate2']):
             elected = candidates['candidate3_name']
             elected_votes = sum(candidates['candidate3'])
-        return f'''
-                ---------------------------------------------------------------
-                Scoreboard for {year_now} election.
-                ---------------------------------------------------------------
+            return scoreboard(total_valid_votes, non_valid_votes, elected, elected_votes)
+        
+        elif sum(candidates['candidate1']) == sum(candidates['candidate2']) or sum(candidates['candidate1']) == sum(candidates['candidate3']) or sum(candidates['candidate2']) == sum(candidates['candidate3']):
+            if sum(candidates['candidate1']) == sum(candidates['candidate2']) and sum(candidates['candidate3']) == 0:
+                elected = ''
+                elected_votes = 0
+                return scoreboard(total_valid_votes, non_valid_votes, elected, elected_votes)
+            
+            elif sum(candidates['candidate1']) == sum(candidates['candidate3']) and sum(candidates['candidate2']) == 0:
+                elected = ''
+                elected_votes = 0
+                return scoreboard(total_valid_votes, non_valid_votes, elected, elected_votes)
 
-                {candidates['candidate1_name']}: {sum(candidates['candidate1'])}
-                {candidates['candidate2_name']}: {sum(candidates['candidate2'])}
-                {candidates['candidate3_name']}: {sum(candidates['candidate3'])}
-                Nulled Votes: {sum(candidates['null'])}
-                Blank Votes: {sum(candidates['blank'])}
-                Total Valid Votes: {total_votes}
-                Total Non-valid Votes: {non_valid_votes}
+            elif sum(candidates['candidate2']) == sum(candidates['candidate3']) and sum(candidates['candidate1']) == 0:
+                elected = ''
+                elected_votes = 0
+                return scoreboard(total_valid_votes, non_valid_votes, elected, elected_votes)         
 
-                ---------------------------------------------------------------
-
-                Elected: {elected} with a total of {elected_votes} valid votes.
-
-                '''
+def scoreboard(valid_votes, invalid_votes, elected_name, elected_total_votes):
+    #There are no calculations done here. Only optimizing the code for less lines
+    total_valid_votes = valid_votes
+    non_valid_votes = invalid_votes
+    elected = elected_name
+    elected_votes = elected_total_votes
+    print_elected = ''
+    if elected == '': 
+        print_elected = 'There was a tie. Nobody won!'
     else:
-        return None
+        print_elected = f'{elected} was elected with a total of {elected_votes} valid votes.'
+    return f'''
+            ---------------------------------------------------------------
+            Scoreboard for {year_now} election.
+            ---------------------------------------------------------------
 
+            {candidates['candidate1_name']}: {sum(candidates['candidate1'])}
+            {candidates['candidate2_name']}: {sum(candidates['candidate2'])}
+            {candidates['candidate3_name']}: {sum(candidates['candidate3'])}
+            Nulled Votes: {sum(candidates['null'])}
+            Blank Votes: {sum(candidates['blank'])}
+            Total Valid Votes: {total_valid_votes}
+            Total Non-valid Votes: {non_valid_votes}
+
+            ---------------------------------------------------------------
+
+            {print_elected}
+
+            '''
 
 #Main Program
 #Attention: Since we're simulating an election software, I've created a second dimension for this exercise: once started, the software will first look for the officer password. In this case, I've set the password as 'blue'. =D
@@ -150,6 +184,7 @@ if password == 'blue':
     os.system('cls' if os.name == 'nt' else 'clear')
     print('Rebooting...')
     os.system('cls' if os.name == 'nt' else 'clear')
+#Voting starts here
 keep_voting = True
 while keep_voting == True:
     os.system('cls' if os.name == 'nt' else 'clear')
@@ -164,6 +199,8 @@ while keep_voting == True:
         [5] Blank Vote
         ''')
     year_of_birth = int(input('In order to vote, please, inform your year of birth: '))
+    while year_of_birth < 1903:
+        year_of_birth = int(input('It seems like you\'re a bit too old, huh? In order to vote, please, inform your year of birth: '))
     authorization = autoriza_voto(year_of_birth)
     print()
     vote_number = int(input('Now, inform the number of your candidate: '))
