@@ -114,7 +114,7 @@ def votacao(auth, vote):
                 return scoreboard(total_valid_votes, non_valid_votes, elected, elected_votes)         
 
 def scoreboard(valid_votes, invalid_votes, elected_name, elected_total_votes):
-    #There are no calculations done here. Only optimizing the code for less lines
+    #There are no calculations done here. Only optimizing the code for less lines. Exactly 130 less lines.
     total_valid_votes = valid_votes
     non_valid_votes = invalid_votes
     elected = elected_name
