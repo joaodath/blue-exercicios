@@ -18,12 +18,7 @@
 # ● O total de votos nulos;
 # ● O total de votos em branco;
 # ● Qual candidato venceu a votação
-# if 18 <= idade < 70:
-#         return f'Idade: {idade} - Voto Obrigatório'
-#     elif 16 <= idade < 18 or idade >= 70:
-#         return f'Idade: {idade} - Voto Opcional'
-#     else:
-#         return f'Idade: {idade} - Voto Negado'
+
 #Setting the current year
 import datetime
 now = datetime.datetime.now()
@@ -79,34 +74,41 @@ def votacao(auth, vote):
     elif auth.strip().upper() == 'SHOW' and vote == 0 or '0':
         total_valid_votes = sum(candidates['candidate1']) + sum(candidates['candidate2']) + sum(candidates['candidate3'])
         non_valid_votes = sum(candidates['null']) + sum(candidates['blank'])
-
+        
+        #Checks if Candidate 1 is the winner
         if sum(candidates['candidate1']) > sum(candidates['candidate2']) and sum(candidates['candidate1']) > sum(candidates['candidate3']):
             elected = candidates['candidate1_name']
             elected_votes = sum(candidates['candidate1'])
             return scoreboard(total_valid_votes, non_valid_votes, elected, elected_votes)
         
+        #Checks if Candidate 2 is the winner
         elif sum(candidates['candidate2']) > sum(candidates['candidate1']) and sum(candidates['candidate2']) > sum(candidates['candidate3']):
             elected = candidates['candidate2_name']
             elected_votes = sum(candidates['candidate2'])
             return scoreboard(total_valid_votes, non_valid_votes, elected, elected_votes)
         
+        #Checks if Candidate 3 is the winner
         elif sum(candidates['candidate3']) > sum(candidates['candidate1']) and sum(candidates['candidate3']) > sum(candidates['candidate2']):
             elected = candidates['candidate3_name']
             elected_votes = sum(candidates['candidate3'])
             return scoreboard(total_valid_votes, non_valid_votes, elected, elected_votes)
         
+        #Checks if there was a tie
         elif sum(candidates['candidate1']) == sum(candidates['candidate2']) or sum(candidates['candidate1']) == sum(candidates['candidate3']) or sum(candidates['candidate2']) == sum(candidates['candidate3']):
-            if sum(candidates['candidate1']) == sum(candidates['candidate2']) and sum(candidates['candidate3']) == 0:
+            #Tie between Candidate 1 and Candidate 2
+            if sum(candidates['candidate1']) == sum(candidates['candidate2']) and any([sum(candidates['candidate3']) == 0, sum(candidates['candidate3']) < (sum(candidates['candidate1']))]):
                 elected = ''
                 elected_votes = 0
                 return scoreboard(total_valid_votes, non_valid_votes, elected, elected_votes)
             
-            elif sum(candidates['candidate1']) == sum(candidates['candidate3']) and sum(candidates['candidate2']) == 0:
+            #Tie between Candidate 1 and Candidate 3
+            elif sum(candidates['candidate1']) == sum(candidates['candidate3']) and any([sum(candidates['candidate2']) == 0, sum(candidates['candidate2']) < (sum(candidates['candidate1']))]):
                 elected = ''
                 elected_votes = 0
                 return scoreboard(total_valid_votes, non_valid_votes, elected, elected_votes)
 
-            elif sum(candidates['candidate2']) == sum(candidates['candidate3']) and sum(candidates['candidate1']) == 0:
+            #Tie between Candidate 2 and Candidate 3
+            elif sum(candidates['candidate2']) == sum(candidates['candidate3']) and any([sum(candidates['candidate1']) == 0, sum(candidates['candidate1']) < (sum(candidates['candidate2']))]):
                 elected = ''
                 elected_votes = 0
                 return scoreboard(total_valid_votes, non_valid_votes, elected, elected_votes)         
@@ -216,9 +218,11 @@ while keep_voting == True:
             keep_voting = False
         else:
             print('Password Incorrect.')
+            print('Next voter, please.')
             sleep(3)
             keep_voting_ask = True
     else:
+        print('Next voter, please.')
         sleep(3)
         keep_voting = True
 print()
